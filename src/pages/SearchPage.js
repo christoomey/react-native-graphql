@@ -5,11 +5,11 @@ import UserList from '../components/UserList';
 
 class SearchPage extends React.Component {
   state = {
-    login: '',
+    username: '',
   };
 
   handleSubmit = event => {
-    this.setState({login: event.nativeEvent.text});
+    this.setState({username: event.nativeEvent.text});
   };
 
   render() {
@@ -20,7 +20,7 @@ class SearchPage extends React.Component {
           onSubmitEditing={this.handleSubmit}
           autoCapitalize="none"
         />
-        <UserList login={this.state.login} />
+        <UserList username={this.state.username} />
       </Page>
     );
   }
