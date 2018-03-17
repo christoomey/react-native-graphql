@@ -1,13 +1,20 @@
 import React from 'react';
-import {View, Text, Linking} from 'react-native';
+import {View, Text, Linking, Button, StyleSheet} from 'react-native';
 import gql from 'graphql-tag';
 import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
 
-const Repo = ({repo}) => (
-  <View>
+const Repo = ({repo, unstarMutation, starMutation}) => (
+  <View style={styles.card}>
     <WebLink href={repo.url}>{repo.name}</WebLink>
     <Text>{repo.description}</Text>
+
+    {repo.viewerHasStarred ? (
+      <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
+    ) : (
+      <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
+    )}
+
     <View>
       <Language language={repo.primaryLanguage} />
       <Text> - {repo.forkCount}</Text>
@@ -16,25 +23,18 @@ const Repo = ({repo}) => (
   </View>
 );
 
-// <Text>
-//   {repo.viewerHasStarred ? (
-//     <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
-//   ) : (
-//     <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
-//   )}
-// </Text>
+const ToggleStarButton = ({mutation, repo, text}) => (
+  <Button
+    title={text}
+    onPress={() => mutation({variables: {repoId: repo.id}})}
+  />
+);
 
 const WebLink = ({href, children}) => (
   <Text style={{color: 'blue'}} onPress={() => Linking.openURL(href)}>
     {children}
   </Text>
 );
-
-// const ToggleStarButton = ({mutation, repo, text}) => (
-//   <button onClick={() => mutation({variables: {repoId: repo.id}})}>
-//     {text}
-//   </button>
-// );
 
 export const REPO_FRAGMENT = gql`
   fragment Repo on Repository {
@@ -76,6 +76,16 @@ const UNSTAR_MUTATION = gql`
   }
   ${REPO_FRAGMENT}
 `;
+
+const styles = StyleSheet.create({
+  card: {
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 3,
+    padding: 5,
+    marginVertical: 10,
+  },
+});
 
 const withStarMutation = graphql(STAR_MUTATION, {name: 'starMutation'});
 const withUnstarMutation = graphql(UNSTAR_MUTATION, {name: 'unstarMutation'});
