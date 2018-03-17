@@ -1,16 +1,19 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+import {Link} from 'react-router-native';
 import gql from 'graphql-tag';
 
 const UserTile = ({user}) => (
-  <View style={styles.row} margin={5}>
-    <Image source={{uri: user.avatarUrl}} style={{width: 20, height: 20}} />
-    <View>
-      <Text>
-        {user.login} {user.name !== '' && `(${user.name})`}
-      </Text>
+  <Link to={`/users/${user.login}`}>
+    <View style={styles.row} margin={5}>
+      <Image source={{uri: user.avatarUrl}} style={{width: 20, height: 20}} />
+      <View>
+        <Text>
+          {user.login} {user.name !== '' && `(${user.name})`}
+        </Text>
+      </View>
     </View>
-  </View>
+  </Link>
 );
 
 export const USER_TILE_FRAGMENT = gql`

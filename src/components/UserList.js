@@ -9,9 +9,8 @@ const UserList = ({data: {search, fetchMore}}) => (
   <View>
     <FlatList
       data={search.edges}
-      renderItem={({item: {node: user}}) => (
-        <UserTile key={user.id} user={user} />
-      )}
+      keyExtractor={item => item.id}
+      renderItem={({item: {node: user}}) => <UserTile user={user} />}
     />
     {search.edges.length !== 0 && (
       <Button

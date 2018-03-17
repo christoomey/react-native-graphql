@@ -1,14 +1,13 @@
 import React from 'react';
-// import {StyleSheet, Text, View} from 'react-native';
 import {ApolloClient} from 'apollo-client';
-// import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {HttpLink} from 'apollo-link-http';
 import {setContext} from 'apollo-link-context';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloProvider} from 'react-apollo';
 import {GITHUB_TOKEN} from 'react-native-dotenv';
+import {NativeRouter, Route, Switch, Redirect} from 'react-router-native';
 import SearchPage from './src/pages/SearchPage';
-// import UserPage from './pages/UserPage';
+import UserPage from './src/pages/UserPage';
 
 const authLink = setContext((_, {headers}) => ({
   headers: {
@@ -26,17 +25,14 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <SearchPage />
+    <NativeRouter>
+      <Switch>
+        <Route exact path="/users" component={SearchPage} />
+        <Route exact path="/users/:login" component={UserPage} />
+        <Redirect from="/" to="/users" />
+      </Switch>
+    </NativeRouter>
   </ApolloProvider>
 );
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 
 export default App;
