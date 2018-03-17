@@ -2,15 +2,11 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {GITHUB_TOKEN} from 'react-native-dotenv';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>token: {GITHUB_TOKEN}</Text>
-      </View>
-    );
-  }
-}
+const App = () => (
+  <View style={styles.container}>
+    <Text>token: {GITHUB_TOKEN}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -20,3 +16,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;
