@@ -1,22 +1,30 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Button} from 'react-native';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 import withLoading from '../hocs/withLoading';
 import UserTile, {USER_TILE_FRAGMENT} from '../components/UserTile';
 
-const UserList = ({data: {search}}) => (
+const UserList = ({data: {search, fetchMore}}) => (
   <View>
     <FlatList
       data={search.edges}
-      renderItem={({item: {node: user}}) => <UserTile user={user} />}
+      renderItem={({item: {node: user}}) => (
+        <UserTile key={user.id} user={user} />
+      )}
     />
+    {search.edges.length !== 0 && (
+      <Button
+        title="Load More"
+        onPress={() => loadMoreResults(search.edges, fetchMore)}
+      />
+    )}
   </View>
 );
 
 const QUERY = gql`
   query UserSearch($username: String!, $cursor: String) {
-    search(first: 10, query: $username, type: USER, after: $cursor) {
+    search(first: 5, query: $username, type: USER, after: $cursor) {
       edges {
         cursor
         node {
@@ -27,6 +35,22 @@ const QUERY = gql`
   }
   ${USER_TILE_FRAGMENT}
 `;
+
+const loadMoreResults = (edges, fetchMore) => {
+  const {cursor} = edges[edges.length - 1];
+  fetchMore({
+    variables: {cursor},
+    updateQuery: (previousResult, {fetchMoreResult}) => ({
+      ...previousResult,
+      search: {
+        edges: [
+          ...previousResult.search.edges,
+          ...fetchMoreResult.search.edges,
+        ],
+      },
+    }),
+  });
+};
 
 const withQuery = graphql(QUERY, {
   options: ({username}) => ({variables: {username}}),
