@@ -19,6 +19,7 @@ class SearchPage extends React.Component {
           style={{height: 26, borderColor: 'gray', borderWidth: 1}}
           onSubmitEditing={this.handleSubmit}
           autoCapitalize="none"
+          placeholder="Enter part of a user name or login"
         />
         <UserList username={this.state.username} />
       </Page>
