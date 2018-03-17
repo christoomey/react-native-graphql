@@ -1,14 +1,15 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import {View, FlatList} from 'react-native';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 import withLoading from '../hocs/withLoading';
+import UserTile, {USER_TILE_FRAGMENT} from '../components/UserTile';
 
 const UserList = ({data: {search}}) => (
   <View>
     <FlatList
       data={search.edges}
-      renderItem={({item: {node: user}}) => <Text>{user.login}</Text>}
+      renderItem={({item: {node: user}}) => <UserTile user={user} />}
     />
   </View>
 );
@@ -19,15 +20,12 @@ const QUERY = gql`
       edges {
         cursor
         node {
-          ... on User {
-            id
-            name
-            login
-          }
+          ...UserTile
         }
       }
     }
   }
+  ${USER_TILE_FRAGMENT}
 `;
 
 const withQuery = graphql(QUERY, {
