@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 import gql from 'graphql-tag';
 
 const UserHeader = ({user}) => (
-  <View>
-    <Image source={{uri: user.avatarUrl}} style={{width: 50, height: 50}} />
+  <View style={styles.row}>
+    <Image source={{uri: user.avatarUrl}} style={{width: 75, height: 75}} />
     <Text>{user.login}</Text>
     <Text>{user.name || '(name not provided)'}</Text>
     <Text>{user.bio}</Text>
@@ -20,5 +20,11 @@ export const USER_HEADER_FRAGMENT = gql`
     avatarUrl
   }
 `;
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+  },
+});
 
 export default UserHeader;

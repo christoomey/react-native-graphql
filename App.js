@@ -29,7 +29,7 @@ const App = () => (
       <Switch>
         <Route exact path="/users" component={SearchPage} />
         <Route exact path="/users/:login" component={UserPage} />
-        <Redirect from="/" to="/users" />
+        <Redirect from="/" to="/users/christoomey" />
       </Switch>
     </NativeRouter>
   </ApolloProvider>
