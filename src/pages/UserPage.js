@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 import {Link} from 'react-router-native';
@@ -7,7 +7,7 @@ import Page from '../components/Page';
 import withLoading from '../hocs/withLoading';
 import UserHeader, {USER_HEADER_FRAGMENT} from '../components/UserHeader';
 import Org, {ORG_FRAGMENT} from '../components/Org';
-// import Repo, {REPO_FRAGMENT} from '../components/Repo';
+import Repo, {REPO_FRAGMENT} from '../components/Repo';
 
 const UserPage = ({data: {user}}) => (
   <Page>
@@ -16,6 +16,12 @@ const UserPage = ({data: {user}}) => (
     <View style={styles.rowList}>
       {user.organizations.nodes.map(org => <Org key={org.id} org={org} />)}
     </View>
+
+    <FlatList
+      data={user.repositories.nodes}
+      keyExtractor={repo => repo.id}
+      renderItem={({item: repo}) => <Repo repo={repo} />}
+    />
 
     <View>
       <Link to="/users">
@@ -30,6 +36,16 @@ const QUERY = gql`
     user(login: $login) {
       ...UserHeader
 
+      repositories(
+        first: 10
+        isFork: false
+        orderBy: {field: STARGAZERS, direction: DESC}
+      ) {
+        nodes {
+          ...Repo
+        }
+      }
+
       organizations(first: 10) {
         nodes {
           ...Org
@@ -40,6 +56,7 @@ const QUERY = gql`
 
   ${USER_HEADER_FRAGMENT}
   ${ORG_FRAGMENT}
+  ${REPO_FRAGMENT}
 `;
 
 const styles = StyleSheet.create({
