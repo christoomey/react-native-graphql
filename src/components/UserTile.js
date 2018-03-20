@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 const UserTile = ({user}) => (
   <Link to={`/${user.login}`}>
     <View style={styles.row} margin={5}>
-      <Image source={{uri: user.avatarUrl}} style={{width: 20, height: 20}} />
+      <Image source={{uri: user.avatarUrl}} style={{width: 40, height: 40}} />
       <View>
         <Text>
           {user.login} {user.name !== '' && `(${user.name})`}

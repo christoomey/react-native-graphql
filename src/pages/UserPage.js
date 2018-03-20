@@ -1,8 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
-import {Link} from 'react-router-native';
 import Page from '../components/Page';
 import withLoading from '../hocs/withLoading';
 import UserHeader, {USER_HEADER_FRAGMENT} from '../components/UserHeader';
@@ -22,12 +21,6 @@ const UserPage = ({data: {user}}) => (
       keyExtractor={repo => repo.id}
       renderItem={({item: repo}) => <Repo repo={repo} />}
     />
-
-    <View>
-      <Link to="/users">
-        <Text>back to users list</Text>
-      </Link>
-    </View>
   </Page>
 );
 
