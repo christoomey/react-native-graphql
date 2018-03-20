@@ -6,7 +6,7 @@ import withLoading from '../hocs/withLoading';
 import UserTile, {USER_TILE_FRAGMENT} from '../components/UserTile';
 
 const UserList = ({data: {search, fetchMore}}) => (
-  <View>
+  <View style={{flex: 1}}>
     <FlatList
       data={search.edges}
       keyExtractor={(item, index) => index}
@@ -42,6 +42,7 @@ const loadMoreResults = (edges, fetchMore) => {
     updateQuery: (previousResult, {fetchMoreResult}) => ({
       ...previousResult,
       search: {
+        __typename: previousResult.search.__typename,
         edges: [
           ...previousResult.search.edges,
           ...fetchMoreResult.search.edges,
