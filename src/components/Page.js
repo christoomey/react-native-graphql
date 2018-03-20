@@ -1,10 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
-const Page = ({children}) => (
-  <View marginTop={30} marginBotton={10} marginHorizontal={10}>
-    {children}
-  </View>
-);
+const Page = ({children}) => <View style={styles.page}>{children}</View>;
+
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    marginTop: 30,
+    marginBottom: 10,
+    marginHorizontal: 10,
+  },
+});
 
 export default Page;

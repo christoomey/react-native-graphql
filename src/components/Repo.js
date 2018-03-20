@@ -15,7 +15,7 @@ const Repo = ({repo, unstarMutation, starMutation}) => (
       <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
     )}
 
-    <View>
+    <View style={styles.detailsRow}>
       <Language language={repo.primaryLanguage} />
       <Text> - {repo.forkCount}</Text>
       <Text> - {repo.stargazers.totalCount}</Text>
@@ -31,7 +31,7 @@ const ToggleStarButton = ({mutation, repo, text}) => (
 );
 
 const WebLink = ({href, children}) => (
-  <Text style={{color: 'blue'}} onPress={() => Linking.openURL(href)}>
+  <Text style={styles.repoTitle} onPress={() => Linking.openURL(href)}>
     {children}
   </Text>
 );
@@ -84,6 +84,13 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     padding: 5,
     marginVertical: 10,
+  },
+  detailsRow: {
+    flexDirection: 'row',
+  },
+  repoTitle: {
+    color: 'blue',
+    fontSize: 24,
   },
 });
 
