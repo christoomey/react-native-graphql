@@ -4,7 +4,7 @@ import {Link} from 'react-router-native';
 import gql from 'graphql-tag';
 
 const UserTile = ({user}) => (
-  <Link to={`/users/${user.login}`}>
+  <Link to={`/${user.login}`}>
     <View style={styles.row} margin={5}>
       <Image source={{uri: user.avatarUrl}} style={{width: 20, height: 20}} />
       <View>

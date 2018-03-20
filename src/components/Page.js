@@ -6,9 +6,7 @@ const Page = ({children}) => <View style={styles.page}>{children}</View>;
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    marginTop: 30,
-    marginBottom: 10,
-    marginHorizontal: 10,
+    margin: 10,
   },
 });
 

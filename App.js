@@ -5,7 +5,8 @@ import {setContext} from 'apollo-link-context';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {ApolloProvider} from 'react-apollo';
 import {GITHUB_TOKEN} from 'react-native-dotenv';
-import {NativeRouter, Route, Switch, Redirect} from 'react-router-native';
+import {NativeRouter} from 'react-router-native';
+import {Navigation, Card} from 'react-router-navigation';
 import SearchPage from './src/pages/SearchPage';
 import UserPage from './src/pages/UserPage';
 
@@ -26,11 +27,21 @@ const client = new ApolloClient({
 const App = () => (
   <ApolloProvider client={client}>
     <NativeRouter>
-      <Switch>
-        <Route exact path="/users" component={SearchPage} />
-        <Route exact path="/users/:login" component={UserPage} />
-        <Redirect from="/" to="/users/christoomey" />
-      </Switch>
+      <Navigation>
+        <Card
+          exact
+          title="GitHub User Search"
+          backButtonTitle="Search"
+          path="/"
+          component={SearchPage}
+        />
+        <Card
+          exact
+          renderTitle={({match}) => match.params.login}
+          path="/:login"
+          component={UserPage}
+        />
+      </Navigation>
     </NativeRouter>
   </ApolloProvider>
 );
