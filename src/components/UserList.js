@@ -11,13 +11,15 @@ const UserList = ({data: {search, fetchMore}}) => (
       data={search.edges}
       keyExtractor={(item, index) => index}
       renderItem={({item: {node: user}}) => <UserTile user={user} />}
+      ListFooterComponent={() =>
+        search.edges.length !== 0 && (
+          <Button
+            title="Load More"
+            onPress={() => loadMoreResults(search.edges, fetchMore)}
+          />
+        )
+      }
     />
-    {search.edges.length !== 0 && (
-      <Button
-        title="Load More"
-        onPress={() => loadMoreResults(search.edges, fetchMore)}
-      />
-    )}
   </View>
 );
 
