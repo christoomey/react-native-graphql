@@ -2,12 +2,13 @@ import React from 'react';
 import {Text, View} from 'react-native';
 import gql from 'graphql-tag';
 
-const Language = ({language, style}) => (
-  <Text style={style}>
-    <Circle color={language.color} />
-    {language.name}
-  </Text>
-);
+const Language = ({language, style}) =>
+  language && (
+    <Text style={style}>
+      <Circle color={language.color} />
+      {language.name}
+    </Text>
+  );
 
 const Circle = ({color}) => (
   <View

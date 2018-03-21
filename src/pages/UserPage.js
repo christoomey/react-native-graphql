@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
 
 const withQuery = graphql(QUERY, {
   options: ({match: {params}}) => ({
-    variables: {login: 'christoomey'},
-    // variables: {login: params.login},
+    variables: {login: params.login},
   }),
 });
 
