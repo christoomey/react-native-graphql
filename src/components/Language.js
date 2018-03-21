@@ -1,9 +1,23 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import gql from 'graphql-tag';
 
 const Language = ({language, style}) => (
-  <Text style={[{color: language.color}, style]}>{language.name}</Text>
+  <Text style={style}>
+    <Circle color={language.color} />
+    {language.name}
+  </Text>
+);
+
+const Circle = ({color}) => (
+  <View
+    style={{
+      backgroundColor: color,
+      borderRadius: 6,
+      height: 12,
+      width: 12,
+    }}
+  />
 );
 
 export const LANGUAGE_FRAGMENT = gql`
