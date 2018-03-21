@@ -6,16 +6,17 @@ import Language, {LANGUAGE_FRAGMENT} from './Language';
 
 const Repo = ({repo, unstarMutation, starMutation}) => (
   <View style={styles.card}>
-    <WebLink href={repo.url}>{repo.name}</WebLink>
-    <Text>{repo.description}</Text>
+    <View style={[styles.row, styles.stuff]}>
+      <WebLink href={repo.url}>{repo.name}</WebLink>
+      {repo.viewerHasStarred ? (
+        <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
+      ) : (
+        <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
+      )}
+    </View>
+    <Text style={styles.description}>{repo.description}</Text>
 
-    {repo.viewerHasStarred ? (
-      <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
-    ) : (
-      <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
-    )}
-
-    <View style={styles.detailsRow}>
+    <View style={styles.row}>
       <Language language={repo.primaryLanguage} style={styles.detail} />
       <Text style={[styles.withIcon, styles.detail]}>
         <Icon source={require('./forked.png')} />
@@ -35,6 +36,7 @@ const ToggleStarButton = ({mutation, repo, text}) => (
   <Button
     title={text}
     onPress={() => mutation({variables: {repoId: repo.id}})}
+    styles={styles.button}
   />
 );
 
@@ -91,13 +93,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     padding: 5,
+    paddingTop: 0,
     marginVertical: 10,
   },
-  detailsRow: {
+  row: {
     flexDirection: 'row',
   },
   detail: {
     marginRight: 10,
+  },
+  description: {
+    marginBottom: 10,
   },
   repoTitle: {
     color: '#0366d6',
@@ -106,6 +112,13 @@ const styles = StyleSheet.create({
   icon: {
     width: 16,
     height: 16,
+  },
+  stuff: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  button: {
+    padding: 0,
   },
   withIcon: {
     flexDirection: 'row',

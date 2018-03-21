@@ -24,21 +24,22 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+// <Card
+//   exact
+//   title="GitHub User Search"
+//   backButtonTitle="Search"
+//   path="/"
+//   component={SearchPage}
+// />
+
 const App = () => (
   <ApolloProvider client={client}>
     <NativeRouter>
       <Navigation>
         <Card
           exact
-          title="GitHub User Search"
-          backButtonTitle="Search"
-          path="/"
-          component={SearchPage}
-        />
-        <Card
-          exact
           renderTitle={({match}) => match.params.login}
-          path="/:login"
+          path="/"
           component={UserPage}
         />
       </Navigation>
