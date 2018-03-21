@@ -12,7 +12,7 @@ const UserPage = ({data: {user}}) => (
   <Page>
     <UserHeader user={user} />
 
-    <View style={styles.rowList}>
+    <View style={styles.orgList}>
       {user.organizations.nodes.map(org => <Org key={org.id} org={org} />)}
     </View>
 
@@ -53,8 +53,9 @@ const QUERY = gql`
 `;
 
 const styles = StyleSheet.create({
-  rowList: {
+  orgList: {
     flexDirection: 'row',
+    marginBottom: 5,
   },
 });
 
