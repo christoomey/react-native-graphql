@@ -89,6 +89,7 @@ module.exports = {
         specialLink: ['to'],
       },
     ],
+    'global-require': 'off',
     'no-console': 'warn',
     'no-extra-bind': 'error',
     'no-implicit-globals': 'error',

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Linking, Button, StyleSheet} from 'react-native';
+import {View, Text, Linking, Button, StyleSheet, Image} from 'react-native';
 import gql from 'graphql-tag';
 import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
@@ -16,12 +16,20 @@ const Repo = ({repo, unstarMutation, starMutation}) => (
     )}
 
     <View style={styles.detailsRow}>
-      <Language language={repo.primaryLanguage} />
-      <Text> - {repo.forkCount}</Text>
-      <Text> - {repo.stargazers.totalCount}</Text>
+      <Language language={repo.primaryLanguage} style={styles.detail} />
+      <Text style={[styles.withIcon, styles.detail]}>
+        <Icon source={require('./forked.png')} />
+        {repo.forkCount}
+      </Text>
+      <Text style={[styles.withIcon, styles.detail]}>
+        <Icon source={require('./star.png')} />
+        {repo.stargazers.totalCount}
+      </Text>
     </View>
   </View>
 );
+
+const Icon = ({source}) => <Image source={source} style={styles.icon} />;
 
 const ToggleStarButton = ({mutation, repo, text}) => (
   <Button
@@ -88,9 +96,19 @@ const styles = StyleSheet.create({
   detailsRow: {
     flexDirection: 'row',
   },
+  detail: {
+    marginRight: 10,
+  },
   repoTitle: {
     color: '#0366d6',
     fontSize: 24,
+  },
+  icon: {
+    width: 16,
+    height: 16,
+  },
+  withIcon: {
+    flexDirection: 'row',
   },
 });
 
