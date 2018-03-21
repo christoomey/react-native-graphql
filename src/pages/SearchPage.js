@@ -1,11 +1,11 @@
 import React from 'react';
-import {TextInput} from 'react-native';
+import {TextInput, StyleSheet} from 'react-native';
 import Page from '../components/Page';
 import UserList from '../components/UserList';
 
 class SearchPage extends React.Component {
   state = {
-    username: 'toomey',
+    username: '',
   };
 
   handleSubmit = event => {
@@ -16,15 +16,25 @@ class SearchPage extends React.Component {
     return (
       <Page>
         <TextInput
-          style={{height: 26, borderColor: 'gray', borderWidth: 1}}
+          style={styles.input}
           onSubmitEditing={this.handleSubmit}
           autoCapitalize="none"
-          placeholder="Enter part of a user name or login"
+          placeholder="Enter part of a user's name or GitHub login"
         />
         <UserList username={this.state.username} />
       </Page>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  input: {
+    height: 30,
+    borderColor: 'grey',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 2,
+  },
+});
 
 export default SearchPage;
