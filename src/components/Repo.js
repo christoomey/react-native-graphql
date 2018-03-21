@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   repoTitle: {
-    color: 'blue',
+    color: '#0366d6',
     fontSize: 24,
   },
 });
