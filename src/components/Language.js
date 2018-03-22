@@ -4,14 +4,15 @@ import gql from 'graphql-tag';
 
 const Language = ({language, style}) =>
   language && (
-    <Text style={style}>
+    <View style={[{flexDirection: 'row'}, style]}>
       <Circle color={language.color} />
-      {language.name}
-    </Text>
+      <Text style={{marginLeft: 2}}>{language.name}</Text>
+    </View>
   );
 
 const Circle = ({color}) => (
   <View
+    collapsable={false}
     style={{
       backgroundColor: color,
       borderRadius: 6,
