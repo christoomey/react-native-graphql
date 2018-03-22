@@ -5,7 +5,7 @@ import UserList from '../components/UserList';
 
 class SearchPage extends React.Component {
   state = {
-    username: 'toomey',
+    username: '',
   };
 
   handleSubmit = event => {
