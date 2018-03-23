@@ -1,17 +1,14 @@
 import React from 'react';
-import {Text, Linking, StyleSheet} from 'react-native';
+import styled from 'styled-components';
+import {Linking} from 'react-native';
 
 const WebLink = ({href, children}) => (
-  <Text style={styles.link} onPress={() => Linking.openURL(href)}>
-    {children}
-  </Text>
+  <StyledLink onPress={() => Linking.openURL(href)}>{children}</StyledLink>
 );
 
-const styles = StyleSheet.create({
-  link: {
-    color: '#0366d6',
-    fontSize: 24,
-  },
-});
+const StyledLink = styled.Text`
+  color: #0366d6;
+  font-size: 24px;
+`;
 
 export default WebLink;
