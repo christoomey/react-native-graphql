@@ -1,43 +1,44 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {Text, Button, StyleSheet} from 'react-native';
 import gql from 'graphql-tag';
 import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
 import WebLink from './WebLink';
-import Icon from './Icon';
+import {ForkedIcon, StarIcon} from './Icon';
+import Card from './Card';
+import Row from './Row';
 
 const Repo = ({repo, unstarMutation, starMutation}) => (
-  <View style={styles.card}>
-    <View style={[styles.row, styles.stuff]}>
+  <Card>
+    <Row style={styles.repoHeader}>
       <WebLink href={repo.url}>{repo.name}</WebLink>
       {repo.viewerHasStarred ? (
         <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
       ) : (
         <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
       )}
-    </View>
+    </Row>
 
     <Text style={styles.description}>{repo.description}</Text>
 
-    <View style={styles.row}>
+    <Row>
       <Language language={repo.primaryLanguage} style={styles.detail} />
       <Text style={[styles.withIcon, styles.detail]}>
-        <Icon source={require('./forked.png')} />
+        <ForkedIcon />
         {repo.forkCount}
       </Text>
       <Text style={[styles.withIcon, styles.detail]}>
-        <Icon source={require('./star.png')} />
+        <StarIcon />
         {repo.stargazers.totalCount}
       </Text>
-    </View>
-  </View>
+    </Row>
+  </Card>
 );
 
 const ToggleStarButton = ({mutation, repo, text}) => (
   <Button
     title={text}
     onPress={() => mutation({variables: {repoId: repo.id}})}
-    styles={styles.button}
   />
 );
 
@@ -83,14 +84,6 @@ const UNSTAR_MUTATION = gql`
 `;
 
 const styles = StyleSheet.create({
-  card: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 3,
-    padding: 5,
-    paddingTop: 0,
-    marginVertical: 10,
-  },
   row: {
     flexDirection: 'row',
   },
@@ -100,12 +93,9 @@ const styles = StyleSheet.create({
   description: {
     marginBottom: 10,
   },
-  stuff: {
+  repoHeader: {
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  button: {
-    padding: 0,
   },
   withIcon: {
     flexDirection: 'row',
