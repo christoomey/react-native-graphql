@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet, Image} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
 import gql from 'graphql-tag';
 import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
 import WebLink from './WebLink';
+import Icon from './Icon';
 
 const Repo = ({repo, unstarMutation, starMutation}) => (
   <View style={styles.card}>
@@ -31,8 +32,6 @@ const Repo = ({repo, unstarMutation, starMutation}) => (
     </View>
   </View>
 );
-
-const Icon = ({source}) => <Image source={source} style={styles.icon} />;
 
 const ToggleStarButton = ({mutation, repo, text}) => (
   <Button
@@ -100,10 +99,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 10,
-  },
-  icon: {
-    width: 16,
-    height: 16,
   },
   stuff: {
     justifyContent: 'space-between',
