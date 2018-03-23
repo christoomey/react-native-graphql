@@ -1,27 +1,30 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
-import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 import Page from '../components/Page';
-import withLoading from '../hocs/withLoading';
 import UserHeader, {USER_HEADER_FRAGMENT} from '../components/UserHeader';
+import DefaultQuery from '../components/DefaultQuery';
 import Org, {ORG_FRAGMENT} from '../components/Org';
 import Repo, {REPO_FRAGMENT} from '../components/Repo';
 
-const UserPage = ({data: {user}}) => (
-  <Page>
-    <UserHeader user={user} />
+const UserPage = ({match: {params: {login}}}) => (
+  <DefaultQuery query={QUERY} variables={{login: 'christoomey'}}>
+    {({data: {user}}) => (
+      <Page>
+        <UserHeader user={user} />
 
-    <View style={styles.orgList}>
-      {user.organizations.nodes.map(org => <Org key={org.id} org={org} />)}
-    </View>
+        <View style={styles.orgList}>
+          {user.organizations.nodes.map(org => <Org key={org.id} org={org} />)}
+        </View>
 
-    <FlatList
-      data={user.repositories.nodes}
-      keyExtractor={repo => repo.id}
-      renderItem={({item: repo}) => <Repo repo={repo} />}
-    />
-  </Page>
+        <FlatList
+          data={user.repositories.nodes}
+          keyExtractor={repo => repo.id}
+          renderItem={({item: repo}) => <Repo repo={repo} />}
+        />
+      </Page>
+    )}
+  </DefaultQuery>
 );
 
 const QUERY = gql`
@@ -59,12 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const withQuery = graphql(QUERY, {
-  options: ({match: {params}}) => ({
-    variables: {login: params.login},
-  }),
-});
-
-const enhanced = compose(withQuery, withLoading);
-
-export default enhanced(UserPage);
+export default UserPage;

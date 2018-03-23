@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, Linking, Button, StyleSheet, Image} from 'react-native';
+import {View, Text, Button, StyleSheet, Image} from 'react-native';
 import gql from 'graphql-tag';
 import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
+import WebLink from './WebLink';
 
 const Repo = ({repo, unstarMutation, starMutation}) => (
   <View style={styles.card}>
@@ -14,6 +15,7 @@ const Repo = ({repo, unstarMutation, starMutation}) => (
         <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
       )}
     </View>
+
     <Text style={styles.description}>{repo.description}</Text>
 
     <View style={styles.row}>
@@ -38,12 +40,6 @@ const ToggleStarButton = ({mutation, repo, text}) => (
     onPress={() => mutation({variables: {repoId: repo.id}})}
     styles={styles.button}
   />
-);
-
-const WebLink = ({href, children}) => (
-  <Text style={styles.repoTitle} onPress={() => Linking.openURL(href)}>
-    {children}
-  </Text>
 );
 
 export const REPO_FRAGMENT = gql`
@@ -104,10 +100,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 10,
-  },
-  repoTitle: {
-    color: '#0366d6',
-    fontSize: 24,
   },
   icon: {
     width: 16,
