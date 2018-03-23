@@ -7,30 +7,34 @@ import WebLink from './WebLink';
 import {ForkedIcon, StarIcon} from './Icon';
 import Card from './Card';
 import Row from './Row';
+import TextWithIcon from './TextWithIcon';
+import RepoHeader from './RepoHeader';
 
 const Repo = ({repo, unstarMutation, starMutation}) => (
   <Card>
-    <Row style={styles.repoHeader}>
+    <RepoHeader>
       <WebLink href={repo.url}>{repo.name}</WebLink>
       {repo.viewerHasStarred ? (
         <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
       ) : (
         <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
       )}
-    </Row>
+    </RepoHeader>
 
     <Text style={styles.description}>{repo.description}</Text>
 
     <Row>
       <Language language={repo.primaryLanguage} style={styles.detail} />
-      <Text style={[styles.withIcon, styles.detail]}>
-        <ForkedIcon />
-        {repo.forkCount}
-      </Text>
-      <Text style={[styles.withIcon, styles.detail]}>
-        <StarIcon />
-        {repo.stargazers.totalCount}
-      </Text>
+      <TextWithIcon
+        icon={ForkedIcon}
+        text={repo.forkCount}
+        style={styles.detail}
+      />
+      <TextWithIcon
+        icon={StarIcon}
+        text={repo.stargazers.totalCount}
+        style={styles.detail}
+      />
     </Row>
   </Card>
 );
@@ -92,13 +96,6 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 10,
-  },
-  repoHeader: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  withIcon: {
-    flexDirection: 'row',
   },
 });
 
