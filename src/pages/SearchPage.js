@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, StyleSheet} from 'react-native';
+import styled from 'styled-components';
 import Page from '../components/Page';
 import UserList from '../components/UserList';
 
@@ -15,8 +15,7 @@ class SearchPage extends React.Component {
   render() {
     return (
       <Page>
-        <TextInput
-          style={styles.input}
+        <StyledInput
           onSubmitEditing={this.handleSubmit}
           autoCapitalize="none"
           placeholder="Enter part of a user's name or GitHub login"
@@ -27,14 +26,12 @@ class SearchPage extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  input: {
-    height: 30,
-    borderColor: 'grey',
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 2,
-  },
-});
+const StyledInput = styled.TextInput`
+  height: 30px;
+  border-color: grey;
+  border-width: 1px;
+  margin-bottom: 10px;
+  padding: 2px;
+`;
 
 export default SearchPage;
