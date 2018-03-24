@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Button, StyleSheet} from 'react-native';
+import {Text, StyleSheet} from 'react-native';
 import gql from 'graphql-tag';
 import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
@@ -9,6 +9,7 @@ import Card from './Card';
 import Row from './Row';
 import TextWithIcon from './TextWithIcon';
 import RepoHeader from './RepoHeader';
+import ToggleStarButton from './ToggleStarButton';
 
 const Repo = ({repo, unstarMutation, starMutation}) => (
   <Card>
@@ -37,13 +38,6 @@ const Repo = ({repo, unstarMutation, starMutation}) => (
       />
     </Row>
   </Card>
-);
-
-const ToggleStarButton = ({mutation, repo, text}) => (
-  <Button
-    title={text}
-    onPress={() => mutation({variables: {repoId: repo.id}})}
-  />
 );
 
 export const REPO_FRAGMENT = gql`
