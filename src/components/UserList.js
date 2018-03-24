@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, FlatList, Button} from 'react-native';
+import {FlatList, Button} from 'react-native';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 import withLoading from '../hocs/withLoading';
 import UserTile, {USER_TILE_FRAGMENT} from '../components/UserTile';
+import Container from './Container';
 
 const UserList = ({data: {search, fetchMore}}) => (
-  <View style={{flex: 1}}>
+  <Container>
     <FlatList
       data={search.edges}
       keyExtractor={(item, index) => index}
@@ -20,7 +21,7 @@ const UserList = ({data: {search, fetchMore}}) => (
         )
       }
     />
-  </View>
+  </Container>
 );
 
 const QUERY = gql`
