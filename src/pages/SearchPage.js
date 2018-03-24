@@ -5,11 +5,11 @@ import UserList from '../components/UserList';
 
 class SearchPage extends React.Component {
   state = {
-    username: '',
+    login: '',
   };
 
   handleSubmit = event => {
-    this.setState({username: event.nativeEvent.text});
+    this.setState({login: event.nativeEvent.text});
   };
 
   render() {
@@ -20,7 +20,7 @@ class SearchPage extends React.Component {
           autoCapitalize="none"
           placeholder="Enter part of a user's name or GitHub login"
         />
-        <UserList username={this.state.username} />
+        <UserList login={this.state.login} />
       </Page>
     );
   }

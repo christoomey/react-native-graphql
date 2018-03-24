@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 
 const DefaultQuery = ({query, variables = {}, children}) => (
   <Query query={query} variables={variables}>
-    {({loading, error, data}) => {
+    {({loading, error, data, fetchMore}) => {
       if (loading)
         return (
           <View>
@@ -18,7 +18,7 @@ const DefaultQuery = ({query, variables = {}, children}) => (
           </View>
         );
 
-      return children({data});
+      return children({data, fetchMore});
     }}
   </Query>
 );

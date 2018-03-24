@@ -1,32 +1,35 @@
 import React from 'react';
 import {FlatList, Button} from 'react-native';
-import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
-import withLoading from '../hocs/withLoading';
 import UserTile, {USER_TILE_FRAGMENT} from '../components/UserTile';
 import Container from './Container';
+import DefaultQuery from './DefaultQuery';
 
-const UserList = ({data: {search, fetchMore}}) => (
+const UserList = ({login}) => (
   <Container>
-    <FlatList
-      data={search.edges}
-      keyExtractor={(item, index) => index}
-      renderItem={({item: {node: user}}) => <UserTile user={user} />}
-      ListFooterComponent={() =>
-        search.edges.length !== 0 && (
-          <Button
-            title="Load More"
-            onPress={() => loadMoreResults(search.edges, fetchMore)}
-          />
-        )
-      }
-    />
+    <DefaultQuery query={QUERY} variables={{login}}>
+      {({data: {search}, fetchMore}) => (
+        <FlatList
+          data={search.edges}
+          keyExtractor={(item, index) => index}
+          renderItem={({item: {node: user}}) => <UserTile user={user} />}
+          ListFooterComponent={() =>
+            search.edges.length !== 0 && (
+              <Button
+                title="Load More"
+                onPress={() => loadMoreResults(search.edges, fetchMore)}
+              />
+            )
+          }
+        />
+      )}
+    </DefaultQuery>
   </Container>
 );
 
 const QUERY = gql`
-  query UserSearch($username: String!, $cursor: String) {
-    search(first: 5, query: $username, type: USER, after: $cursor) {
+  query UserSearch($login: String!, $cursor: String) {
+    search(first: 5, query: $login, type: USER, after: $cursor) {
       edges {
         cursor
         node {
@@ -55,10 +58,4 @@ const loadMoreResults = (edges, fetchMore) => {
   });
 };
 
-const withQuery = graphql(QUERY, {
-  options: ({username}) => ({variables: {username}}),
-});
-
-const enhanced = compose(withQuery, withLoading);
-
-export default enhanced(UserList);
+export default UserList;
