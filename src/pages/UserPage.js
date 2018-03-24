@@ -1,21 +1,22 @@
 import React from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import gql from 'graphql-tag';
 import Page from '../components/Page';
 import UserHeader, {USER_HEADER_FRAGMENT} from '../components/UserHeader';
 import DefaultQuery from '../components/DefaultQuery';
 import Org, {ORG_FRAGMENT} from '../components/Org';
 import Repo, {REPO_FRAGMENT} from '../components/Repo';
+import RowSection from '../components/RowSection';
 
 const UserPage = ({match: {params: {login}}}) => (
-  <DefaultQuery query={QUERY} variables={{login: 'christoomey'}}>
+  <DefaultQuery query={QUERY} variables={{login}}>
     {({data: {user}}) => (
       <Page>
         <UserHeader user={user} />
 
-        <View style={styles.orgList}>
+        <RowSection>
           {user.organizations.nodes.map(org => <Org key={org.id} org={org} />)}
-        </View>
+        </RowSection>
 
         <FlatList
           data={user.repositories.nodes}
@@ -54,12 +55,5 @@ const QUERY = gql`
   ${ORG_FRAGMENT}
   ${REPO_FRAGMENT}
 `;
-
-const styles = StyleSheet.create({
-  orgList: {
-    flexDirection: 'row',
-    marginBottom: 5,
-  },
-});
 
 export default UserPage;
