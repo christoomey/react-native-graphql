@@ -1,16 +1,21 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {Text} from 'react-native';
 import gql from 'graphql-tag';
+import RowSection from './RowSection';
+import Container from './Container';
+import Title from './Title';
+import Avatar from './Avatar';
+import SubTitle from './SubTitle';
 
 const UserHeader = ({user}) => (
-  <View style={styles.row}>
-    <Image source={{uri: user.avatarUrl}} style={styles.avatar} />
-    <View style={{flex: 1}}>
-      <Text style={styles.loginTitle}>{user.login}</Text>
-      <Text style={styles.name}>{user.name || '(name not provided)'}</Text>
+  <RowSection>
+    <Avatar source={{uri: user.avatarUrl}} />
+    <Container>
+      <Title>{user.login}</Title>
+      <SubTitle>{user.name || '(name not provided)'}</SubTitle>
       <Text>{user.bio}</Text>
-    </View>
-  </View>
+    </Container>
+  </RowSection>
 );
 
 export const USER_HEADER_FRAGMENT = gql`
@@ -22,26 +27,5 @@ export const USER_HEADER_FRAGMENT = gql`
     avatarUrl
   }
 `;
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  loginTitle: {
-    fontSize: 24,
-  },
-  name: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 5,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 3,
-    marginRight: 10,
-  },
-});
 
 export default UserHeader;
