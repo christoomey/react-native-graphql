@@ -1,10 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import styled from 'styled-components';
 import gql from 'graphql-tag';
 
-const Org = ({org}) => (
-  <Image source={{uri: org.avatarUrl}} style={styles.image} />
-);
+const Org = ({org}) => <StyledImage source={{uri: org.avatarUrl}} />;
 
 export const ORG_FRAGMENT = gql`
   fragment Org on Organization {
@@ -14,12 +12,10 @@ export const ORG_FRAGMENT = gql`
   }
 `;
 
-const styles = StyleSheet.create({
-  image: {
-    width: 25,
-    height: 25,
-    marginRight: 5,
-  },
-});
+const StyledImage = styled.Image`
+  height: 25px;
+  margin-right: 5px;
+  width: 25px;
+`;
 
 export default Org;
