@@ -7,6 +7,7 @@ import WebLink from './WebLink';
 import {ForkedIcon, StarIcon} from './Icon';
 import Card from './Card';
 import Row from './Row';
+import RowSection from './RowSection';
 import TextWithIcon from './TextWithIcon';
 import RepoHeader from './RepoHeader';
 import ToggleStarButton from './ToggleStarButton';
@@ -22,7 +23,9 @@ const Repo = ({repo, unstarMutation, starMutation}) => (
       )}
     </RepoHeader>
 
-    <Text style={styles.description}>{repo.description}</Text>
+    <RowSection>
+      <Text>{repo.description}</Text>
+    </RowSection>
 
     <Row>
       <Language language={repo.primaryLanguage} style={styles.detail} />
@@ -82,14 +85,8 @@ const UNSTAR_MUTATION = gql`
 `;
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-  },
   detail: {
     marginRight: 10,
-  },
-  description: {
-    marginBottom: 10,
   },
 });
 
