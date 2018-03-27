@@ -1,7 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
 import gql from 'graphql-tag';
-import {graphql, compose} from 'react-apollo';
 import Language, {LANGUAGE_FRAGMENT} from './Language';
 import WebLink from './WebLink';
 import {ForkedIcon, StarIcon} from './Icon';
@@ -10,17 +9,13 @@ import Row from './Row';
 import RowSection from './RowSection';
 import TextWithIcon from './TextWithIcon';
 import RepoHeader from './RepoHeader';
-import ToggleStarButton from './ToggleStarButton';
+import ToggleStarButton, {STARS_FRAGMENT} from './ToggleStarButton';
 
-const Repo = ({repo, unstarMutation, starMutation}) => (
+const Repo = ({repo}) => (
   <Card>
     <RepoHeader>
       <WebLink href={repo.url}>{repo.name}</WebLink>
-      {repo.viewerHasStarred ? (
-        <ToggleStarButton mutation={unstarMutation} repo={repo} text="UnStar" />
-      ) : (
-        <ToggleStarButton mutation={starMutation} repo={repo} text="Star" />
-      )}
+      <ToggleStarButton repo={repo} />
     </RepoHeader>
 
     <RowSection>
@@ -50,38 +45,13 @@ export const REPO_FRAGMENT = gql`
     name
     description
     forkCount
-    viewerHasStarred
-    stargazers {
-      totalCount
-    }
+    ...Stars
     primaryLanguage {
       ...Language
     }
   }
-
+  ${STARS_FRAGMENT}
   ${LANGUAGE_FRAGMENT}
-`;
-
-const STAR_MUTATION = gql`
-  mutation StarRepo($repoId: ID!) {
-    addStar(input: {starrableId: $repoId}) {
-      starrable {
-        ...Repo
-      }
-    }
-  }
-  ${REPO_FRAGMENT}
-`;
-
-const UNSTAR_MUTATION = gql`
-  mutation StarRepo($repoId: ID!) {
-    removeStar(input: {starrableId: $repoId}) {
-      starrable {
-        ...Repo
-      }
-    }
-  }
-  ${REPO_FRAGMENT}
 `;
 
 const styles = StyleSheet.create({
@@ -90,7 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const withStarMutation = graphql(STAR_MUTATION, {name: 'starMutation'});
-const withUnstarMutation = graphql(UNSTAR_MUTATION, {name: 'unstarMutation'});
-
-export default compose(withStarMutation, withUnstarMutation)(Repo);
+export default Repo;
