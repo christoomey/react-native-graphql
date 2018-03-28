@@ -8,19 +8,14 @@ import DefaultQuery from './DefaultQuery';
 const UserList = ({login}) => (
   <Container>
     <DefaultQuery query={QUERY} variables={{login}}>
-      {({data: {search}, fetchMore}) => (
+      {({data: {search: {edges: users}}, fetchMore}) => (
         <FlatList
-          data={search.edges}
+          data={users}
           keyExtractor={(item, index) => index}
           renderItem={({item: {node: user}}) => <UserTile user={user} />}
-          ListFooterComponent={() =>
-            search.edges.length !== 0 && (
-              <Button
-                title="Load More"
-                onPress={() => loadMoreResults(search.edges, fetchMore)}
-              />
-            )
-          }
+          ListFooterComponent={() => (
+            <LoadMoreFooter users={users} fetchMore={fetchMore} />
+          )}
         />
       )}
     </DefaultQuery>
@@ -44,6 +39,14 @@ const QUERY = gql`
     }
   }
 `;
+
+const LoadMoreFooter = ({users, fetchMore}) =>
+  users.length !== 0 && (
+    <Button
+      title="Load More"
+      onPress={() => loadMoreResults(users, fetchMore)}
+    />
+  );
 
 const loadMoreResults = (edges, fetchMore) => {
   const {cursor} = edges[edges.length - 1];
