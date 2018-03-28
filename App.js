@@ -4,8 +4,13 @@ import {ApolloProvider} from 'react-apollo';
 import {GITHUB_TOKEN} from 'react-native-dotenv';
 import {NativeRouter} from 'react-router-native';
 import {Navigation, Card} from 'react-router-navigation';
+import Reactotron from 'reactotron-react-native';
 import SearchPage from './src/pages/SearchPage';
 import UserPage from './src/pages/UserPage';
+
+Reactotron.configure()
+  .useReactNative()
+  .connect();
 
 const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
