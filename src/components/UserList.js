@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList, Button} from 'react-native';
 import gql from 'graphql-tag';
-import UserTile from '../components/UserTile';
+import UserTile, {USER_TILE_FRAGMENT} from '../components/UserTile';
 import Container from './Container';
 import DefaultQuery from './DefaultQuery';
 
@@ -28,16 +28,12 @@ const QUERY = gql`
       edges {
         cursor
         node {
-          ... on User {
-            id
-            login
-            name
-            avatarUrl
-          }
+          ...UserTile
         }
       }
     }
   }
+  ${USER_TILE_FRAGMENT}
 `;
 
 const LoadMoreFooter = ({users, fetchMore}) =>

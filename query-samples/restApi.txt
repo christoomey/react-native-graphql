@@ -1,3 +1,4 @@
 https://api.github.com/users/christoomey
 https://api.github.com/users/christoomey/orgs
 https://api.github.com/users/christoomey/repos
+https://api.github.com/repos/christoomey/alfred-trello-boards/languages
