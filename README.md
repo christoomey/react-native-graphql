@@ -1,6 +1,11 @@
 React Native - GraphQL Sample App
 =================================
 
+**Note**: This repo has been superceded. Please see the
+[boston react conf 2018 GraphQL Talk sample app](https://github.com/christoomey/boston-react-conf-2018-graphql-talk) for a more recent exploration of the same topics that were covered here.
+
+------
+
 This repository contains the code for a sample app I used alongside a
 presentation I gave at the [March 2018 meeting][] of the [Boston React Native
 Meetup group][]. You can see a recoding of the talk in [the meetup recording][],
